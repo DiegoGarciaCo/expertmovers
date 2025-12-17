@@ -32,7 +32,7 @@ COPY --from=builder /app/public ./public
 
 RUN adduser -D ghost
 COPY --from=builder --chown=ghost:ghost /app/.next/standalone ./
-COPY --from=builder --chown=ghost:ghost /app/.next/static ./.next/static
+COPY --from=builder --chown=ghost:ghost /app/.next/static ./
 
 USER ghost
 EXPOSE 4005
