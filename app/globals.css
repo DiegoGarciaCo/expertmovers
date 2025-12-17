@@ -24,3 +24,15 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+#mb-short-form, #mb-short-form * {
+    font-size: 0.95rem !important; 
+    line-height: 1.2em !important;
+  }
+#mb-short-form a[href^="tel"] {
+    display: block !important;
+    margin-top: 4px !important; /* small gap under "call us at" */
+    font-weight: 600 !important;
+    color: #2364d2 !important;
+    text-decoration: none !important;
+  }
