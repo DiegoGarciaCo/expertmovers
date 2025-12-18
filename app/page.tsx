@@ -46,7 +46,7 @@ export default function Home() {
                                 <a href="#calculator" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition text-center">
                                     Get Free Quote
                                 </a>
-                                <a href="tel:+1+7733607602" className="bg-white border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 transition text-center">
+                                <a href="tel:+17733607602" className="bg-white border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 transition text-center">
                                     📞 Call Now
                                 </a>
                             </div>
