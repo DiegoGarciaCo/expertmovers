@@ -20,6 +20,9 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Use BuildKit secret mounts to pass env variables at build-time
+RUN --mount=type=secret,id=PORT,env=PORT\
+    sh -c "npm run build"
 
 # Runner stage
 FROM base AS runner
@@ -32,7 +35,7 @@ COPY --from=builder /app/public ./public
 
 RUN adduser -D ghost
 COPY --from=builder --chown=ghost:ghost /app/.next/standalone ./
-COPY --from=builder --chown=ghost:ghost /app/.next/static ./
+COPY --from=builder --chown=ghost:ghost /app/.next/static ./.next/static
 
 USER ghost
 EXPOSE 4005
