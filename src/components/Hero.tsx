@@ -6,7 +6,7 @@ export default function Hero() {
 
     return (
         <section
-            className="relative min-h-screen px-4 sm:px-6 lg:px-8 overflow-hidden"
+            className="relative px-4 sm:px-6 lg:px-8 overflow-hidden"
             style={{ paddingTop: `${NAV_HEIGHT}px` }} // pushes hero content below nav
         >
             {/* Background image */}
