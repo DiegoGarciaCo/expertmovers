@@ -11,7 +11,7 @@ export default function Hero() {
         >
             {/* Background image */}
             <div
-                className="absolute inset-0 bg-cover bg-center"
+                className="absolute inset-0 bg-cover bg-top"
                 style={{ backgroundImage: "url('/backgroundImageOfChicago.png')" }}
             />
 
@@ -71,39 +71,40 @@ export default function Hero() {
                             <SingleStepForm variant="hero" />
                         </div>
                     </div>
+
+                    <div className="bg-white/50 mx-auto mb-10 p-4 rounded-lg backdrop-blur-sm flex justify-around items-center col-span-2 w-full">
+                        <Image
+                            src="/googleGuaranteed.png"
+                            alt="Google Guaranteed"
+                            width={100}
+                            height={50}
+                            className="object-contain"
+                        />
+                        <Image
+                            src="/hassleFreeGuarantee.png"
+                            alt="Hassle Free Guaranteed"
+                            width={100}
+                            height={50}
+                            className="object-contain"
+                        />
+                        <Image
+                            src="/localMovers.png"
+                            alt="Best Price Guaranteed"
+                            width={100}
+                            height={50}
+                            className="object-contain"
+                        />
+                        <Image
+                            src="/yelpGuaranteed.png"
+                            alt="Best Price Guaranteed"
+                            width={100}
+                            height={50}
+                            className="object-contain"
+                        />
+                    </div>
                 </div>
             </div>
 
-            <div className="bg-white/30 mx-auto mb-10 p-4 rounded-lg backdrop-blur-sm flex justify-around items-center">
-                <Image
-                    src="/googleGuaranteed.png"
-                    alt="Google Guaranteed"
-                    width={100}
-                    height={50}
-                    className="object-contain"
-                />
-                <Image
-                    src="/hassleFreeGuarantee.png"
-                    alt="Hassle Free Guaranteed"
-                    width={100}
-                    height={50}
-                    className="object-contain"
-                />
-                <Image
-                    src="/localMovers.png"
-                    alt="Best Price Guaranteed"
-                    width={100}
-                    height={50}
-                    className="object-contain"
-                />
-                <Image
-                    src="/yelpGuaranteed.png"
-                    alt="Best Price Guaranteed"
-                    width={100}
-                    height={50}
-                    className="object-contain"
-                />
-            </div>
         </section>
     );
 }

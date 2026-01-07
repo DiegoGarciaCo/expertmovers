@@ -5,13 +5,6 @@ import { z } from 'zod';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
 import { useRouter } from 'next/navigation';
 
 const formSchema = z
@@ -20,21 +13,8 @@ const formSchema = z
         firstName: z.string().min(1, 'First name is required'),
         lastName: z.string().min(1, 'Last name is required'),
         phone: z.string().min(1, 'Phone is required'),
-        hearAboutUs: z.string().min(1, 'Please select an option'),
         otherSource: z.string().optional(),
     })
-    .refine(
-        (data) => {
-            if (data.hearAboutUs === 'Other') {
-                return !!data.otherSource && data.otherSource.length > 0;
-            }
-            return true;
-        },
-        {
-            message: 'Please specify where you heard about us',
-            path: ['otherSource'],
-        }
-    );
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -54,7 +34,6 @@ export default function SingleStepForm({
         firstName: '',
         lastName: '',
         phone: '',
-        hearAboutUs: '',
         otherSource: '',
     });
 
@@ -83,15 +62,6 @@ export default function SingleStepForm({
         }
     };
 
-    const handleSelectChange = (value: string) => {
-        setFormData((prev) => ({
-            ...prev,
-            hearAboutUs: value,
-        }));
-        if (errors.hearAboutUs) {
-            setErrors((prev) => ({ ...prev, hearAboutUs: '' }));
-        }
-    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -163,7 +133,6 @@ export default function SingleStepForm({
                                 firstName: '',
                                 lastName: '',
                                 phone: '',
-                                hearAboutUs: '',
                                 otherSource: '',
                             });
                         }}
@@ -252,54 +221,6 @@ export default function SingleStepForm({
                         <p className="text-red-500 text-sm">{errors.phone}</p>
                     )}
                 </div>
-
-                <div className="space-y-2">
-                    <Label>How did you hear about us? *</Label>
-                    <Select value={formData.hearAboutUs} onValueChange={handleSelectChange}>
-                        <SelectTrigger
-                            className={errors.hearAboutUs ? `border-red-500 ${inputClasses}` : inputClasses}
-                        >
-                            <SelectValue placeholder="Select an option" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {[
-                                'Returning Customer',
-                                'Customer Referral',
-                                'Google Search',
-                                'Google Guaranteed Services',
-                                'Yelp',
-                                'Facebook',
-                                'Truck Advertisement',
-                                'Postcard',
-                                'Other',
-                            ].map((item) => (
-                                <SelectItem key={item} value={item}>
-                                    {item}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                    {errors.hearAboutUs && (
-                        <p className="text-red-500 text-sm">{errors.hearAboutUs}</p>
-                    )}
-                </div>
-
-                {formData.hearAboutUs === 'Other' && (
-                    <div className="space-y-2">
-                        <Label htmlFor="otherSource">Please specify *</Label>
-                        <Input
-                            id="otherSource"
-                            name="otherSource"
-                            value={formData.otherSource}
-                            onChange={handleChange}
-                            placeholder="Tell us where you heard about us"
-                            className={errors.otherSource ? `border-red-500 ${inputClasses}` : inputClasses}
-                        />
-                        {errors.otherSource && (
-                            <p className="text-red-500 text-sm">{errors.otherSource}</p>
-                        )}
-                    </div>
-                )}
 
                 <Button
                     onClick={handleSubmit}

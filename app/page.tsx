@@ -3,6 +3,7 @@
 import TwoStepForm from "@/src/components/2StepForm";
 import ContactSection from "@/src/components/contactSection";
 import Hero from "@/src/components/Hero";
+import HowItWorksSection from "@/src/components/HowItWorksSection";
 import Nav from "@/src/components/nav";
 import ServicesSection from "@/src/components/ServicesSection";
 import SingleStepForm from "@/src/components/singleStepForm";
@@ -18,24 +19,18 @@ export default function Home() {
             {/* Hero Section - Above the Fold */}
             <Hero />
 
-            {/* Services Section */}
-            <ServicesSection />
+            {/* How It Works Section */}
+            <HowItWorksSection />
+
+
+
+            {/* Testimonials Section */}
+            <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+                <Testimonials />
+            </section>
 
             {/* Moving Calculator Section */}
-            <section id="calculator" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-                <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                            Hassle-Free Guarantee
-                        </h2>
-                        <p className="text-xl text-gray-600">
-                            Use our hassle-free calculator to get an instant estimate for your move
-                        </p>
-                    </div>
-                    <SingleStepForm />
-                </div>
-            </section>
-            <section id="calculator" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+            <section id="calculator" className="py-20 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-12">
                         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -47,11 +42,6 @@ export default function Home() {
                     </div>
                     <TwoStepForm />
                 </div>
-            </section>
-
-            {/* Testimonials Section */}
-            <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-                <Testimonials />
             </section>
 
             {/* Contact Section */}
