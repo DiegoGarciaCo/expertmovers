@@ -14,22 +14,27 @@ import {
 } from '@/components/ui/select';
 import { useRouter } from 'next/navigation';
 
-const formSchema = z.object({
-    email: z.string().email('Invalid email address'),
-    firstName: z.string().min(1, 'First name is required'),
-    lastName: z.string().min(1, 'Last name is required'),
-    phone: z.string().min(1, 'Phone is required'),
-    hearAboutUs: z.string().min(1, 'Please select an option'),
-    otherSource: z.string().optional(),
-}).refine((data) => {
-    if (data.hearAboutUs === 'Other') {
-        return !!data.otherSource && data.otherSource.length > 0;
-    }
-    return true;
-}, {
-    message: 'Please specify where you heard about us',
-    path: ['otherSource'],
-});
+const formSchema = z
+    .object({
+        email: z.string().email('Invalid email address'),
+        firstName: z.string().min(1, 'First name is required'),
+        lastName: z.string().min(1, 'Last name is required'),
+        phone: z.string().min(1, 'Phone is required'),
+        hearAboutUs: z.string().min(1, 'Please select an option'),
+        otherSource: z.string().optional(),
+    })
+    .refine(
+        (data) => {
+            if (data.hearAboutUs === 'Other') {
+                return !!data.otherSource && data.otherSource.length > 0;
+            }
+            return true;
+        },
+        {
+            message: 'Please specify where you heard about us',
+            path: ['otherSource'],
+        }
+    );
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -37,38 +42,54 @@ interface FormErrors {
     [key: string]: string;
 }
 
-export default function SingleStepForm() {
+type FormVariant = 'default' | 'hero';
+
+export default function SingleStepForm({
+    variant = 'default',
+}: {
+    variant?: FormVariant;
+}) {
     const [formData, setFormData] = useState<FormData>({
         email: '',
         firstName: '',
         lastName: '',
         phone: '',
         hearAboutUs: '',
-        otherSource: ''
+        otherSource: '',
     });
 
     const [errors, setErrors] = useState<FormErrors>({});
     const [submitted, setSubmitted] = useState(false);
     const router = useRouter();
 
+    const containerClasses =
+        variant === 'hero'
+            ? 'bg-white/50 backdrop-blur-md shadow-2xl text-gray-950'
+            : 'bg-white shadow-xl text-gray-950';
+
+    const inputClasses =
+        variant === 'hero'
+            ? 'bg-white placeholder-gray-500 text-gray-900'
+            : '';
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
-            [name]: value
+            [name]: value,
         }));
         if (errors[name]) {
-            setErrors(prev => ({ ...prev, [name]: '' }));
+            setErrors((prev) => ({ ...prev, [name]: '' }));
         }
     };
 
     const handleSelectChange = (value: string) => {
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
-            hearAboutUs: value
+            hearAboutUs: value,
         }));
         if (errors.hearAboutUs) {
-            setErrors(prev => ({ ...prev, hearAboutUs: '' }));
+            setErrors((prev) => ({ ...prev, hearAboutUs: '' }));
         }
     };
 
@@ -77,20 +98,23 @@ export default function SingleStepForm() {
 
         try {
             formSchema.parse(formData);
+
             try {
-                await fetch('https://services.leadconnectorhq.com/hooks/abJ6IRAziJKqYWOJlK8P/webhook-trigger/Xdd0HKqpj6L5flaJTa3X', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        ...formData,
-                    }),
-                });
+                await fetch(
+                    'https://services.leadconnectorhq.com/hooks/abJ6IRAziJKqYWOJlK8P/webhook-trigger/Xdd0HKqpj6L5flaJTa3X',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    }
+                );
                 router.push('/thank-you');
             } catch (error) {
-                console.error('Error sending button click event:', error);
+                console.error('Error sending form:', error);
             }
+
             setSubmitted(true);
             setErrors({});
         } catch (error) {
@@ -108,15 +132,29 @@ export default function SingleStepForm() {
 
     if (submitted) {
         return (
-            <div className="w-full max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-xl text-gray-950">
+            <div
+                className={`w-full max-w-2xl mx-auto p-8 rounded-2xl ${containerClasses}`}
+            >
                 <div className="text-center py-12">
                     <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        <svg
+                            className="w-10 h-10 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                            />
                         </svg>
                     </div>
                     <h2 className="text-3xl font-bold text-gray-900 mb-3">Thank You!</h2>
-                    <p className="text-lg text-gray-600 mb-8">We'll get back to you shortly with a quote.</p>
+                    <p className="text-lg text-gray-600 mb-8">
+                        We'll get back to you shortly with a quote.
+                    </p>
                     <Button
                         onClick={() => {
                             setSubmitted(false);
@@ -126,7 +164,7 @@ export default function SingleStepForm() {
                                 lastName: '',
                                 phone: '',
                                 hearAboutUs: '',
-                                otherSource: ''
+                                otherSource: '',
                             });
                         }}
                         className="bg-blue-600 hover:bg-blue-700"
@@ -139,10 +177,16 @@ export default function SingleStepForm() {
     }
 
     return (
-        <div className="w-full max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-xl text-gray-950">
+        <div
+            className={`w-full max-w-2xl mx-auto p-8 rounded-2xl ${containerClasses}`}
+        >
             <div className="mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Get Your Free Quote</h2>
-                <p className="text-gray-600">Fill out the form below and we'll contact you soon</p>
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                    Get Your Free Quote
+                </h2>
+                <p className="text-gray-600">
+                    Fill out the form below and we'll contact you soon
+                </p>
             </div>
 
             <div className="space-y-6">
@@ -152,13 +196,14 @@ export default function SingleStepForm() {
                         <Input
                             id="firstName"
                             name="firstName"
-                            type="text"
                             value={formData.firstName}
                             onChange={handleChange}
                             placeholder="John"
-                            className={errors.firstName ? 'border-red-500' : ''}
+                            className={errors.firstName ? `border-red-500 ${inputClasses}` : inputClasses}
                         />
-                        {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
+                        {errors.firstName && (
+                            <p className="text-red-500 text-sm">{errors.firstName}</p>
+                        )}
                     </div>
 
                     <div className="space-y-2">
@@ -166,13 +211,14 @@ export default function SingleStepForm() {
                         <Input
                             id="lastName"
                             name="lastName"
-                            type="text"
                             value={formData.lastName}
                             onChange={handleChange}
                             placeholder="Smith"
-                            className={errors.lastName ? 'border-red-500' : ''}
+                            className={errors.lastName ? `border-red-500 ${inputClasses}` : inputClasses}
                         />
-                        {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+                        {errors.lastName && (
+                            <p className="text-red-500 text-sm">{errors.lastName}</p>
+                        )}
                     </div>
                 </div>
 
@@ -185,9 +231,11 @@ export default function SingleStepForm() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="john@example.com"
-                        className={errors.email ? 'border-red-500' : ''}
+                        className={errors.email ? `border-red-500 ${inputClasses}` : inputClasses}
                     />
-                    {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                    {errors.email && (
+                        <p className="text-red-500 text-sm">{errors.email}</p>
+                    )}
                 </div>
 
                 <div className="space-y-2">
@@ -195,34 +243,45 @@ export default function SingleStepForm() {
                     <Input
                         id="phone"
                         name="phone"
-                        type="tel"
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="(555) 123-4567"
-                        className={errors.phone ? 'border-red-500' : ''}
+                        className={errors.phone ? `border-red-500 ${inputClasses}` : inputClasses}
                     />
-                    {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+                    {errors.phone && (
+                        <p className="text-red-500 text-sm">{errors.phone}</p>
+                    )}
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="hearAboutUs">How did you hear about us? *</Label>
+                    <Label>How did you hear about us? *</Label>
                     <Select value={formData.hearAboutUs} onValueChange={handleSelectChange}>
-                        <SelectTrigger className={errors.hearAboutUs ? 'border-red-500' : ''}>
+                        <SelectTrigger
+                            className={errors.hearAboutUs ? `border-red-500 ${inputClasses}` : inputClasses}
+                        >
                             <SelectValue placeholder="Select an option" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="Returning Customer">Returning Customer</SelectItem>
-                            <SelectItem value="Customer Referral">Customer Referral</SelectItem>
-                            <SelectItem value="Google Search">Google Search</SelectItem>
-                            <SelectItem value="Google Guaranteed Services">Google Guaranteed Services</SelectItem>
-                            <SelectItem value="Yelp">Yelp</SelectItem>
-                            <SelectItem value="Facebook">Facebook</SelectItem>
-                            <SelectItem value="Truck Advertisement">Truck Advertisement</SelectItem>
-                            <SelectItem value="Postcard">Postcard</SelectItem>
-                            <SelectItem value="Other">Other</SelectItem>
+                            {[
+                                'Returning Customer',
+                                'Customer Referral',
+                                'Google Search',
+                                'Google Guaranteed Services',
+                                'Yelp',
+                                'Facebook',
+                                'Truck Advertisement',
+                                'Postcard',
+                                'Other',
+                            ].map((item) => (
+                                <SelectItem key={item} value={item}>
+                                    {item}
+                                </SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
-                    {errors.hearAboutUs && <p className="text-red-500 text-sm">{errors.hearAboutUs}</p>}
+                    {errors.hearAboutUs && (
+                        <p className="text-red-500 text-sm">{errors.hearAboutUs}</p>
+                    )}
                 </div>
 
                 {formData.hearAboutUs === 'Other' && (
@@ -231,13 +290,14 @@ export default function SingleStepForm() {
                         <Input
                             id="otherSource"
                             name="otherSource"
-                            type="text"
                             value={formData.otherSource}
                             onChange={handleChange}
                             placeholder="Tell us where you heard about us"
-                            className={errors.otherSource ? 'border-red-500' : ''}
+                            className={errors.otherSource ? `border-red-500 ${inputClasses}` : inputClasses}
                         />
-                        {errors.otherSource && <p className="text-red-500 text-sm">{errors.otherSource}</p>}
+                        {errors.otherSource && (
+                            <p className="text-red-500 text-sm">{errors.otherSource}</p>
+                        )}
                     </div>
                 )}
 

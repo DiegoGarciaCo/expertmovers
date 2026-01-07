@@ -71,7 +71,7 @@ export default function ThankYouPage() {
                                         You'll Hear From Us Soon
                                     </h3>
                                     <p className="text-gray-600">
-                                        Expect a call or email from our team within 24 hours with your personalized moving quote.
+                                        Expect a call or email from our team within 30 minutes with your personalized moving quote.
                                     </p>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@ export default function ThankYouPage() {
                                 <Clock className="w-8 h-8 text-blue-600" />
                             </div>
                             <h3 className="font-semibold text-gray-900 mb-2">Quick Response</h3>
-                            <p className="text-gray-600 text-sm">Within 24 hours</p>
+                            <p className="text-gray-600 text-sm">Within 30 minutes</p>
                         </div>
 
                         {/* Phone */}
@@ -112,8 +112,8 @@ export default function ThankYouPage() {
                                 <Phone className="w-8 h-8 text-blue-600" />
                             </div>
                             <h3 className="font-semibold text-gray-900 mb-2">Call Us</h3>
-                            <a href="tel:555-123-4567" className="text-blue-600 hover:text-blue-700 font-medium">
-                                (555) 123-4567
+                            <a href="tel:773 360-7602" className="text-blue-600 hover:text-blue-700 font-medium">
+                                (773) 360-7602
                             </a>
                         </div>
 
@@ -123,8 +123,8 @@ export default function ThankYouPage() {
                                 <Mail className="w-8 h-8 text-blue-600" />
                             </div>
                             <h3 className="font-semibold text-gray-900 mb-2">Email Us</h3>
-                            <a href="mailto:info@movingcompany.com" className="text-blue-600 hover:text-blue-700 font-medium text-sm">
-                                info@movingcompany.com
+                            <a href="mailto:info@hireexpertmovers.com" className="text-blue-600 hover:text-blue-700 font-medium text-sm">
+                                info@hireexpertmovers.com
                             </a>
                         </div>
                     </div>
@@ -132,14 +132,14 @@ export default function ThankYouPage() {
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
-                            onClick={() => router.push('/')}
+                            onClick={() => router.replace('https://www.hireexpertmovers.com/resources')}
                             className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6"
                         >
-                            Return to Homepage
+                            Check out our Moving tips and FAQs
                             <ArrowRight className="ml-2 w-5 h-5" />
                         </Button>
                         <Button
-                            onClick={() => router.push(`/#services`)}
+                            onClick={() => router.replace(`https://www.hireexpertmovers.com/services`)}
                             variant="outline"
                             className="text-lg px-8 py-6 border-2"
                         >
@@ -154,15 +154,15 @@ export default function ThankYouPage() {
                         </p>
                         <div className="flex flex-wrap justify-center items-center gap-8">
                             <div className="text-center">
-                                <div className="text-3xl font-bold text-blue-600">10,000+</div>
+                                <div className="text-3xl font-bold text-blue-600">7,000+</div>
                                 <div className="text-sm text-gray-600">Successful Moves</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-3xl font-bold text-blue-600">4.9★</div>
+                                <div className="text-3xl font-bold text-blue-600">4.8★</div>
                                 <div className="text-sm text-gray-600">Average Rating</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-3xl font-bold text-blue-600">15+</div>
+                                <div className="text-3xl font-bold text-blue-600">11+</div>
                                 <div className="text-sm text-gray-600">Years Experience</div>
                             </div>
                         </div>
