@@ -40,7 +40,7 @@ export default function Home() {
                             Use our hassle-free calculator to get an instant estimate for your move
                         </p>
                     </div>
-                    <TwoStepForm />
+                    <SingleStepForm />
                 </div>
             </section>
 

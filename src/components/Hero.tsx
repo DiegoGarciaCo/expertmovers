@@ -1,5 +1,6 @@
 import Image from "next/image";
 import SingleStepForm from "./singleStepForm";
+import TwoStepForm from "./2StepForm";
 
 export default function Hero() {
     const NAV_HEIGHT = 96; // same as Nav h-24
@@ -66,41 +67,55 @@ export default function Hero() {
                     </div>
 
                     {/* RIGHT: Form */}
-                    <div className="rounded-2xl p-10 shadow-2xl self-center">
+                    <div className="rounded-2xl md:pr-10 self-center">
                         <div className="text-gray-500 text-center">
-                            <SingleStepForm variant="hero" />
+                            <TwoStepForm variant="hero" />
                         </div>
                     </div>
 
-                    <div className="bg-white/50 mx-auto mb-10 p-4 rounded-lg backdrop-blur-sm flex justify-around items-center col-span-2 w-full">
-                        <Image
-                            src="/googleGuaranteed.png"
-                            alt="Google Guaranteed"
-                            width={100}
-                            height={50}
-                            className="object-contain"
-                        />
-                        <Image
-                            src="/hassleFreeGuarantee.png"
-                            alt="Hassle Free Guaranteed"
-                            width={100}
-                            height={50}
-                            className="object-contain"
-                        />
-                        <Image
-                            src="/localMovers.png"
-                            alt="Best Price Guaranteed"
-                            width={100}
-                            height={50}
-                            className="object-contain"
-                        />
-                        <Image
-                            src="/yelpGuaranteed.png"
-                            alt="Best Price Guaranteed"
-                            width={100}
-                            height={50}
-                            className="object-contain"
-                        />
+                    <div className="md:col-span-2 md:pr-10">
+                        <div className="
+    bg-white/50 
+    mx-auto 
+    mb-10 
+    md:p-5 
+    p-4
+    rounded-lg 
+    backdrop-blur-sm 
+    grid grid-cols-2 gap-4
+    md:grid-cols-4
+    items-center
+    w-full
+  ">
+                            <Image
+                                src="/googleGuaranteed.png"
+                                alt="Google Guaranteed"
+                                width={100}
+                                height={50}
+                                className="object-contain mx-auto"
+                            />
+                            <Image
+                                src="/hassleFreeGuarantee.png"
+                                alt="Hassle Free Guaranteed"
+                                width={100}
+                                height={50}
+                                className="object-contain mx-auto"
+                            />
+                            <Image
+                                src="/localMovers.png"
+                                alt="Best Price Guaranteed"
+                                width={100}
+                                height={50}
+                                className="object-contain mx-auto"
+                            />
+                            <Image
+                                src="/yelpGuaranteed.png"
+                                alt="Yelp Guaranteed"
+                                width={100}
+                                height={50}
+                                className="object-contain mx-auto"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

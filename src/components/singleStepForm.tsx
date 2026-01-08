@@ -149,7 +149,7 @@ export default function SingleStepForm({
         <div
             className={`w-full max-w-2xl mx-auto p-8 rounded-2xl ${containerClasses}`}
         >
-            <div className="mb-8">
+            <div className="mb-8 text-center">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">
                     Get Your Free Quote
                 </h2>

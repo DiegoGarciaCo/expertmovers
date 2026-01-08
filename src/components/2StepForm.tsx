@@ -30,16 +30,6 @@ const step2Schema = z.object({
     firstName: z.string().min(1, 'First name is required'),
     lastName: z.string().min(1, 'Last name is required'),
     phone: z.string().min(1, 'Phone is required'),
-    hearAboutUs: z.string().min(1, 'Please select an option'),
-    otherSource: z.string().optional(),
-}).refine((data) => {
-    if (data.hearAboutUs === 'Other') {
-        return !!data.otherSource && data.otherSource.length > 0;
-    }
-    return true;
-}, {
-    message: 'Please specify where you heard about us',
-    path: ['otherSource'],
 });
 
 const fullFormSchema = step1Schema.merge(step2Schema);
@@ -50,7 +40,13 @@ interface FormErrors {
     [key: string]: string;
 }
 
-export default function TwoStepForm() {
+type FormVariant = 'default' | 'hero';
+
+export default function TwoStepForm({
+    variant = 'default',
+}: {
+    variant?: FormVariant;
+}) {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState<FormData>({
         moveType: '',
@@ -63,13 +59,21 @@ export default function TwoStepForm() {
         firstName: '',
         lastName: '',
         phone: '',
-        hearAboutUs: '',
-        otherSource: ''
     });
 
     const [errors, setErrors] = useState<FormErrors>({});
     const [submitted, setSubmitted] = useState(false);
     const router = useRouter();
+
+    const containerClasses =
+        variant === 'hero'
+            ? 'bg-white/50 backdrop-blur-md shadow-2xl text-gray-950'
+            : 'bg-white shadow-xl text-gray-950';
+
+    const inputClasses =
+        variant === 'hero'
+            ? 'bg-white placeholder-gray-500 text-gray-900'
+            : '';
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -174,7 +178,7 @@ export default function TwoStepForm() {
 
     if (submitted) {
         return (
-            <div className="w-full max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-xl">
+            <div className={`w-full max-w-2xl mx-auto p-8 rounded-2xl ${containerClasses}`}>
                 <div className="text-center py-12">
                     <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
                         <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -198,8 +202,6 @@ export default function TwoStepForm() {
                                 firstName: '',
                                 lastName: '',
                                 phone: '',
-                                hearAboutUs: '',
-                                otherSource: ''
                             });
                         }}
                         className="bg-blue-600 hover:bg-blue-700"
@@ -212,9 +214,9 @@ export default function TwoStepForm() {
     }
 
     return (
-        <div className="w-full max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-xl">
+        <div className={`w-full max-w-2xl mx-auto p-8 rounded-2xl ${containerClasses}`}>
             {/* Progress Bar */}
-            <div className="mb-8">
+            <div>
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${step === 1 ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-600'
@@ -274,7 +276,7 @@ export default function TwoStepForm() {
                                 type="date"
                                 value={formData.moveDate}
                                 onChange={handleChange}
-                                className={errors.moveDate ? 'border-red-500' : ''}
+                                className={errors.moveDate ? `border-red-500 ${inputClasses}` : inputClasses}
                             />
                             {errors.moveDate && <p className="text-red-500 text-sm">{errors.moveDate}</p>}
                         </div>
@@ -290,7 +292,7 @@ export default function TwoStepForm() {
                                     onChange={handleChange}
                                     placeholder="10001"
                                     maxLength={5}
-                                    className={errors.zipFrom ? 'border-red-500' : ''}
+                                    className={errors.zipFrom ? `border-red-500 ${inputClasses}` : inputClasses}
                                 />
                                 {errors.zipFrom && <p className="text-red-500 text-sm">{errors.zipFrom}</p>}
                             </div>
@@ -305,7 +307,7 @@ export default function TwoStepForm() {
                                     onChange={handleChange}
                                     placeholder="10002"
                                     maxLength={5}
-                                    className={errors.zipTo ? 'border-red-500' : ''}
+                                    className={errors.zipTo ? `border-red-500 ${inputClasses}` : inputClasses}
                                 />
                                 {errors.zipTo && <p className="text-red-500 text-sm">{errors.zipTo}</p>}
                             </div>
@@ -333,7 +335,7 @@ export default function TwoStepForm() {
                         <div className="space-y-2 text-gray-950">
                             <Label htmlFor="moveSize">Move Size *</Label>
                             <Select value={formData.moveSize} onValueChange={(value) => handleSelectChange('moveSize', value)}>
-                                <SelectTrigger className={errors.moveSize ? 'border-red-500' : ''}>
+                                <SelectTrigger className={errors.moveSize ? `border-red-500 ${inputClasses}` : inputClasses}>
                                     <SelectValue placeholder="Select size" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -374,7 +376,7 @@ export default function TwoStepForm() {
                                     value={formData.firstName}
                                     onChange={handleChange}
                                     placeholder="John"
-                                    className={errors.firstName ? 'border-red-500' : ''}
+                                    className={errors.firstName ? `border-red-500 ${inputClasses}` : inputClasses}
                                 />
                                 {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
                             </div>
@@ -388,7 +390,7 @@ export default function TwoStepForm() {
                                     value={formData.lastName}
                                     onChange={handleChange}
                                     placeholder="Smith"
-                                    className={errors.lastName ? 'border-red-500' : ''}
+                                    className={errors.lastName ? `border-red-500 ${inputClasses}` : inputClasses}
                                 />
                                 {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
                             </div>
@@ -403,7 +405,7 @@ export default function TwoStepForm() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 placeholder="john@example.com"
-                                className={errors.email ? 'border-red-500' : ''}
+                                className={errors.email ? `border-red-500 ${inputClasses}` : inputClasses}
                             />
                             {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                         </div>
@@ -417,47 +419,11 @@ export default function TwoStepForm() {
                                 value={formData.phone}
                                 onChange={handleChange}
                                 placeholder="(555) 123-4567"
-                                className={errors.phone ? 'border-red-500' : ''}
+                                className={errors.phone ? `border-red-500 ${inputClasses}` : inputClasses}
                             />
                             {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
                         </div>
 
-                        <div className="space-y-2 text-gray-950">
-                            <Label htmlFor="hearAboutUs">How did you hear about us? *</Label>
-                            <Select value={formData.hearAboutUs} onValueChange={(value) => handleSelectChange('hearAboutUs', value)}>
-                                <SelectTrigger className={errors.hearAboutUs ? 'border-red-500' : ''}>
-                                    <SelectValue placeholder="Select an option" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="Returning Customer">Returning Customer</SelectItem>
-                                    <SelectItem value="Customer Referral">Customer Referral</SelectItem>
-                                    <SelectItem value="Google Search">Google Search</SelectItem>
-                                    <SelectItem value="Google Guaranteed Services">Google Guaranteed Services</SelectItem>
-                                    <SelectItem value="Yelp">Yelp</SelectItem>
-                                    <SelectItem value="Facebook">Facebook</SelectItem>
-                                    <SelectItem value="Truck Advertisement">Truck Advertisement</SelectItem>
-                                    <SelectItem value="Postcard">Postcard</SelectItem>
-                                    <SelectItem value="Other">Other</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            {errors.hearAboutUs && <p className="text-red-500 text-sm">{errors.hearAboutUs}</p>}
-                        </div>
-
-                        {formData.hearAboutUs === 'Other' && (
-                            <div className="space-y-2 text-gray-950">
-                                <Label htmlFor="otherSource">Please specify *</Label>
-                                <Input
-                                    id="otherSource"
-                                    name="otherSource"
-                                    type="text"
-                                    value={formData.otherSource}
-                                    onChange={handleChange}
-                                    placeholder="Tell us where you heard about us"
-                                    className={errors.otherSource ? 'border-red-500' : ''}
-                                />
-                                {errors.otherSource && <p className="text-red-500 text-sm">{errors.otherSource}</p>}
-                            </div>
-                        )}
 
                         <div className="flex gap-4">
                             <Button
