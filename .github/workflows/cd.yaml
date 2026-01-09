@@ -38,6 +38,7 @@ jobs:
           tags: dgarcia51/expertmovers:${{ github.sha }},dgarcia51/expertmovers:latest
           secrets: |
             PORT=${{ secrets.PORT }}
+            NEXT_PUBLIC_CLARITY_ID=${{ secrets.NEXT_PUBLIC_CLARITY_ID }}
 
   deploy:
     name: Deploy
@@ -70,6 +71,7 @@ jobs:
                 environment:
                   - PORT=${PORT}
                   - NODE_ENV=production
+                  - NEXT_PUBLIC_CLARITY_ID=${NEXT_PUBLIC_CLARITY_ID}
                 deploy:
                   replicas: 1
                   update_config:
@@ -80,6 +82,7 @@ jobs:
 
             # Export environment variables
             export PORT=${{ secrets.PORT }}
+            export NEXT_PUBLIC_CLARITY_ID=${{ secrets.NEXT_PUBLIC_CLARITY_ID }}
 
             # Deploy stack
             docker stack deploy -c docker-compose.yml expertmovers

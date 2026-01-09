@@ -22,6 +22,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 # Use BuildKit secret mounts to pass env variables at build-time
 RUN --mount=type=secret,id=PORT,env=PORT\
+    --mount=type=secret,id=NEXT_PUBLIC_CLARITY_ID,env=NEXT_PUBLIC_CLARITY_ID\
     sh -c "npm run build"
 
 # Runner stage

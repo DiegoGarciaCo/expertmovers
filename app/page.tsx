@@ -1,11 +1,9 @@
 'use client'
 
-import TwoStepForm from "@/src/components/2StepForm";
 import ContactSection from "@/src/components/contactSection";
 import Hero from "@/src/components/Hero";
 import HowItWorksSection from "@/src/components/HowItWorksSection";
 import Nav from "@/src/components/nav";
-import ServicesSection from "@/src/components/ServicesSection";
 import SingleStepForm from "@/src/components/singleStepForm";
 import Testimonials from "@/src/components/testimonials";
 

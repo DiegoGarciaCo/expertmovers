@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+import ClarityInit from "@/src/components/ClarityInit";
 
 
 const geistSans = Geist({
@@ -56,12 +57,14 @@ export default function RootLayout({
                     strategy="afterInteractive"
                 />
             </head>
+            <GoogleAnalytics gaId="G-M4P00031PZ" />
+            <GoogleTagManager gtmId="GTM-WQBFTNVB" />
+            <ClarityInit />
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
                 {children}
             </body>
-            <GoogleAnalytics gaId="G-M4P00031PZ" />
         </html>
     );
 }
