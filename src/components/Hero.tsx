@@ -11,10 +11,15 @@ export default function Hero() {
             style={{ paddingTop: `${NAV_HEIGHT}px` }} // pushes hero content below nav
         >
             {/* Background image */}
-            <div
-                className="absolute inset-0 bg-cover bg-top"
-                style={{ backgroundImage: "url('/backgroundImageOfChicago.png')" }}
-            />
+            <div className="absolute inset-0 -z-10">
+                <Image
+                    src="/backgroundImageOfChicago.png"
+                    alt="Chicago skyline"
+                    fill
+                    priority
+                    className="object-cover object-top"
+                />
+            </div>
 
             <div className="relative max-w-7xl mx-auto flex items-center">
                 <div className="grid md:grid-cols-2 gap-12 w-full">
