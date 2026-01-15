@@ -70,6 +70,10 @@ export default function Hero() {
                                 )
                             )}
                         </div>
+                        <div className="flex justify-between items-center mt-6">
+                            <div className="elfsight-app-f767b3ad-67aa-4403-844f-48b2b699615c" data-elfsight-app-lazy></div>
+                            <div />
+                        </div>
                     </div>
 
                     {/* RIGHT: Form */}
