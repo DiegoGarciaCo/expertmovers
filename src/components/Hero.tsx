@@ -8,15 +8,16 @@ export default function Hero() {
     return (
         <section
             className="relative px-4 sm:px-6 lg:px-8 overflow-hidden"
-            style={{ paddingTop: `${NAV_HEIGHT}px` }} // pushes hero content below nav
+            style={{ paddingTop: `${NAV_HEIGHT}px` }}
         >
-            {/* Background image */}
-            <div className="absolute inset-0 -z-10">
+            {/* Background */}
+            <div className="absolute inset-0 z-0">
                 <Image
                     src="/backgroundImageOfChicago.png"
                     alt="Chicago skyline"
                     fill
                     priority
+                    sizes="100vw"
                     className="object-cover object-top"
                 />
             </div>
