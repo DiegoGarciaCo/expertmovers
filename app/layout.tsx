@@ -57,7 +57,7 @@ export default function RootLayout({
                     strategy="afterInteractive"
                 />
             </head>
-            <GoogleAnalytics gaId="G-M4P00031PZ" />
+            <GoogleAnalytics gaId="G-DW9KSISY2C" />
             <GoogleTagManager gtmId="GTM-WQBFTNVB" />
             <ClarityInit />
             <body
